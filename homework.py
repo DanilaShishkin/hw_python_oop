@@ -64,8 +64,8 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    coeff_calorie_1: int = 18
-    coeff_calorie_2: int = 20
+    coeff_calorie_1: int = 18  # Коэффициент подсчета калорий по бегу №1
+    coeff_calorie_2: int = 20  # Коэффициент подсчета калорий по бегу №2
 
     def __init__(self,
                  action: int,
@@ -80,14 +80,14 @@ class Running(Training):
     def get_spent_calories(self) -> float:
         calor_run = ((self.coeff_calorie_1 * self.get_mean_speed()
                       - self.coeff_calorie_2) * self.weight
-                      / self.M_IN_KM * self.duration * 60)
+                     / self.M_IN_KM * self.duration * 60)
         return calor_run
 
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    coeff_calorie_1: float = 0.035
-    coeff_calorie_2: float = 0.029
+    coeff_calorie_1: float = 0.035  # Коэффициент подсчета калорий по ходьбе №1
+    coeff_calorie_2: float = 0.029  # Коэффициент подсчета калорий по ходьбе №2
 
     def __init__(self,
                  action: int,
@@ -106,15 +106,15 @@ class SportsWalking(Training):
         calor_walk = ((self.coeff_calorie_1 * self.weight
                        + (self.get_mean_speed()**2 // self.height)
                        * self.coeff_calorie_2 * self.weight)
-                       * self.duration * 60)
+                      * self.duration * 60)
         return calor_walk
 
 
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38  # Длина гребка
-    coef_calorie_1: float = 1.1
-    coef_calorie_2: float = 2
+    coef_calorie_1: float = 1.1  # Коэффициент подсчета калорий по плаванию №1
+    coef_calorie_2: float = 2  # Коэффициент подсчета калорий по плаванию №2
 
     def __init__(self,
                  action: int,
@@ -138,7 +138,7 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         calor_swim = ((self.get_mean_speed() + self.coef_calorie_1)
-                       * self.coef_calorie_2 * self.weight)
+                      * self.coef_calorie_2 * self.weight)
         return calor_swim
 
 
