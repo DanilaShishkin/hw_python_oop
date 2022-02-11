@@ -41,7 +41,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        NotImplementedError
+        raise NotImplementedError(
+            'Определите калории в %s.' % (type(self).__name__))
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -58,11 +59,12 @@ class Running(Training):
     """Тренировка: бег."""
     COEFF_CALORIE_1: ClassVar[float] = 18  # Коэффициент по бегу №1
     COEFF_CALORIE_2: ClassVar[float] = 20  # Коэффициент по бегу №2
+    COEFF_HOUR: ClassVar[float] = 60  # Коэффициент перевода чамы в минуты
 
     def get_spent_calories(self) -> float:
         calor_run = ((self.COEFF_CALORIE_1 * self.get_mean_speed()
                       - self.COEFF_CALORIE_2) * self.weight
-                     / self.M_IN_KM * self.duration * 60)
+                     / self.M_IN_KM * self.duration * self.COEFF_HOUR)
         return calor_run
 
 
@@ -110,7 +112,7 @@ def read_package(workout_type: str, data: list) -> Training:
         'WLK': SportsWalking
     }
     if workout_type not in trainings:
-        raise ValueError('Неизвестный тип тренировки')
+        raise ValueError(f'Неизвестный тип тренировки {workout_type}.')
     return trainings[workout_type](*data)
 
 
